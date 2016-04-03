@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <meta name="Author" content="" />
+
+    <script>
+        function commandSubmit() {
+            var command = document.getElementById("commandInput").value;
+            eval(command);
+        };
+    </script>
+
+    <script>
+        var tmcore = new Object();
+        tmcore.loadScript = function (url) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    var head = document.getElementsByTagName('head')[0];
+                    var script = document.createElement('script');
+                    script.id = url;
+                    script.type = 'text/javascript';
+                    script.src = "data:text/javascript;base64," + btoa(xhttp.responseText);
+                    script.async = true;
+                    head.appendChild(script);
+
+                }
+            }
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        };
+        tmcore.loadScript("script.js");
+    </script>
+</head>
+
+<body>
+
+    <h2>Command</h2>
+    <input id="commandInput" type="text">
+    <input type="button" value="Submit" onclick="commandSubmit()">
+    <h2>Response</h2>
+    <div id="responseDiv"></div>
+
+</body>
+
+</html>
